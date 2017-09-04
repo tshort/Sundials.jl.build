@@ -30,7 +30,7 @@ temp_prefix() do prefix
 	    cd(string(platform)) do 
                 target = platform_triplet(platform)
                 libsundials = LibraryResult(joinpath(libdir(prefix), target, "libsundials"))
-                extras = platform == :win64 ? `-DCMAKE_SYSTEM_NAME=Windows` : ``
+                extras = platform in (:win64,:win32) ? `-DCMAKE_SYSTEM_NAME=Windows` : ``
                 cmake_args = `-DCMAKE_INSTALL_PREFIX=/inst/$platform -DEXAMPLES_ENABLE=OFF $extras`
                 steps = [`cmake $cmake_args ../../src/sundials-2.7.0/`, 
                          `make -j4`, 
